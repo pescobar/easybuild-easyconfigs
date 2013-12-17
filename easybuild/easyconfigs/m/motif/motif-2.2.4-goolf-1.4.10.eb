@@ -37,6 +37,8 @@ builddependencies = [
     ('printproto', '1.0.5'),
 ]
 
+osdependencies = ['libXft-devel']
+
 # make has problems with utf8
 premakeopts = "LANG=C "
 

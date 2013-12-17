@@ -23,6 +23,8 @@ builddependencies = [
     ('printproto', '1.0.5'),
 ]
 
+osdependencies = ['libXft-devel']
+
 dependencies = [
     ('libtool', '2.4.2'),
     ('libXt', '1.1.4'),
