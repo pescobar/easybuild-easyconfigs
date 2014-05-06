@@ -1,0 +1,52 @@
+# This file is an EasyBuild reciPY as per https://github.com/hpcugent/easybuild
+# Author: Pablo Escobar Lopez
+# Swiss Institute of Bioinformatics
+# Biozentrum - University of Basel
+
+easyblock = 'MakeCp'
+
+name = "IQSeq"
+version = "1.0"
+# versionsuffix is the github commit id used for download
+versionsuffix = "_5d282d"
+
+homepage = 'https://github.com/gersteinlab/IQSeq - https://code.google.com/p/iqseq/'
+description = """ Integrated Isoform Quantiﬁcation Analysis based on A Partial Sampling Framework """
+
+toolchain = {'name': 'goolf', 'version': '1.4.10'}
+
+# from github we download the IQSeq source. From archive.gersteinlab.org we download the
+# required Boost library. Order in source_urls matters
+source_urls = ['http://archive.gersteinlab.org/boost/', 'https://github.com/gersteinlab/IQSeq/archive/']
+git_commit_id = versionsuffix[1:]
+sources = ['%s.tar.gz' % git_commit_id, 'boost_1_34_1.zip']
+
+# remove provided binaries to be sure we compile them from sources
+premakeopts = 'rm -fr %(builddir)s/IQSeq-*/solve/bin/* && '
+
+# move the boost_1_34_1 folder inside the IQSeq source folder before compilation as the makefile is 
+# expecting to find boost_1_34_1 there
+premakeopts += 'mv %(builddir)s/boost_1_34_1/ %(builddir)s/IQSeq-* && '
+
+# run make inside "solve" folder
+start_dir = "solve"
+
+parallel = 1
+
+# copy everything to installation directory. We require at least EasyBuild-1.12 to have glob support 
+# in the MakeCp easyblock
+easybuild_version = '1.12.0'
+files_to_copy = ["../*"]
+
+sanity_check_paths = {
+    'files': ['solve/bin/solve', 'README.md'],
+    'dirs': ['boost_1_34_1', 'common', 'cppunit', 'gsl', 'jdu_source_collection']
+}
+
+# add to modulefile required env vars that developer recommends
+modextrapaths = {
+         'PATH': 'solve/bin',
+         'LD_LIBRARY_PATH': 'gsl/lib:$root/cppunit/lib',
+}
+
+moduleclass = 'bio'
