@@ -3,6 +3,8 @@
 # sciCORE - University of Basel
 # SIB Swiss Institute of Bioinformatics 
 
+# The provided binaries require OpenBLAS and GSL libs
+
 easyblock = 'Tarball'
 
 name = 'EIGENSOFT'
