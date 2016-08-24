@@ -16,7 +16,7 @@ description = """Basic Local Alignment Search Tool, or BLAST, is an algorithm
 
 toolchain = {'name': 'dummy', 'version': 'dummy'}
 
-source_urls = ['http://ftp.ncbi.nlm.nih.gov/blast/executables/release/%(version)s/']
+source_urls = ['http://ftp.ncbi.nlm.nih.gov/blast/executables/legacy/%(version)s/']
 sources = ['%(namelower)s-%(version)s-x64-linux.tar.gz']
 
 sanity_check_paths = {
